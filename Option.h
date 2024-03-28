@@ -4,20 +4,39 @@
 
 #include "BinomialModel.h"
 
-//Define class for  European Option
-class EurOption { 
-
+class Option 
+{
     private:
-        int N;
+    int N;
 
     public:
-        void SetN(int N_){N=N_;}
-        virtual double Payoff(double z){return 0;}
+    void SetN(int N_) {N= N_;}
+    virtual double Payoff(double z) = 0;
+    int GetN(){return N;}
+};
+
+//Define class for  European Option
+class EurOption: public virtual Option
+{ 
+
+    public:
+     
         double PriceCRR(BinModel Model);
 
 };
 
-class Call: public EurOption
+//Class for American Option
+
+class AmOption: public virtual Option
+{
+
+    public:
+       double  PriceBySnell(BinModel Model);
+
+
+};
+
+class Call: public EurOption , public AmOption
 {
     private:
         double K; // The strike price for the option
@@ -29,7 +48,7 @@ class Call: public EurOption
 
 };
 
-class Put: public EurOption
+class Put: public EurOption , public AmOption
 {
     private:
         double K;
@@ -40,7 +59,7 @@ class Put: public EurOption
 };
 
 
-class DigitalCall: public EurOption
+class DigitalCall: public EurOption, public AmOption
 {
     private:
         double K1,K2;
