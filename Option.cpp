@@ -1,10 +1,13 @@
 #include "Option.h"
 #include "BinomialModel.h"
 
+
 double EurOption::PriceCRR(BinModel Model)
 {
     double q= Model.RiskNeutralP();
+    int N = GetN();
     double Price[N+1];
+    
 
     for (int i = 0; i<=N; i++)
         {
@@ -21,6 +24,31 @@ double EurOption::PriceCRR(BinModel Model)
 
             }
             return Price[0];
+}
+
+double AmOption::PriceBySnell(BinModel Model)
+{
+    double q = Model.RiskNeutralP();
+    int N = GetN();
+    double Price[N+1];
+    int ContVal;
+    for (int i=0 ; i<=N; i++)
+    {
+        Price[i]=Payoff(Model.S(N,i));
+        
+    }
+
+    for (int n = N-1;n>=0; n--)
+    {
+        for(int i =0; i<=n;i++)
+        {
+            ContVal= (Price[i+1]*q+Price[i]*(1-q))/(1+Model.GetR());
+            Price[i]=Payoff(Model.S(n,i));
+         if (ContVal>Price[i]) Price[i]=ContVal;
+
+        }
+    }
+    return Price[0];
 }
 
 int Call::GetInput()
