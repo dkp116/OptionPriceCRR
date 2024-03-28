@@ -1,4 +1,6 @@
+#ifndef Binomial_h
 #include <iostream>
+
 #define BinomialModel_h
 using namespace std;
 
@@ -23,3 +25,4 @@ class BinModel {
     
 };
 
+#endif
