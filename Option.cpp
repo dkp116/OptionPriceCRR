@@ -34,8 +34,34 @@ int Call::GetInput()
 
 double Call::Payoff(double z)
 {
-    if (z>K) {return z-K};
+    if (z>K) {return z-K;}
     return 0.0;
 }
 
+int Put::GetInput()
+{   
+    int N;
+    cout<< "Enter how many steps N"; cin >> N;
+    SetN(N);
+    cout << "Enter Strike Price"; cin >> K;
+    SetK(K);
+}
+
+double Put::Payoff(double z)
+{
+    if (z<K) {return z-K;}
+    return 0.0;
+}
+
+int DigitalCall::GetInput()
+{
+    cout<< " Enter Lower Strike"; cin >> K1;
+    cout << "Enter Upper Strike" ; cin >> K2;
+}
+
+double DigitalCall::Payoff(double S)
+{
+    if(S>K1 && S<K2) {return 1.0;}
+    return 0; 
+}
 
