@@ -1,3 +1,4 @@
+#include "BinLattice.h"
 #include "BinomialModel.h"
 #include "Option.h"
 #include <iostream>
@@ -7,25 +8,17 @@ int main()
 {
    BinModel Model;
 
-   if (Model.InputValues()==1) return 1;
+   if (Model.GetInputData()==1) return 1;
 
-   Call Option1;
-   Option1.GetInput();
-   cout << "European call option price = "
-        << Option1.PriceCRR(Model)
-        << endl;
-   cout << "American call option price = "
-        << Option1.PriceBySnell(Model)
+   Put Option;
+   Option.GetInputData();
+   BinLattice<double> PriceTree;
+   BinLattice<bool> StoppingTree;
+   Option.PriceBySnell(Model,PriceTree,StoppingTree);
+   cout << "American put prices:" << endl << endl;
+   PriceTree.Display();
+   cout << "American put exercise policy:"
         << endl << endl;
-
-   Put Option2;
-   Option2.GetInput();
-   cout << "European put option price = "
-        << Option2.PriceCRR(Model)
-        << endl;
-   cout << "American put option price = "
-        << Option2.PriceBySnell(Model)
-        << endl << endl;
-
+   StoppingTree.Display();
    return 0;
 }

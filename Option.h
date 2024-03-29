@@ -1,73 +1,55 @@
-// Create a Class for an Option
 #ifndef Option_h
 #define Option_h
-
+#include "BinLattice.h"
 #include "BinomialModel.h"
 
-class Option 
+class Option
 {
-    private:
-    int N;
+   private:
+      int N; //steps to expiry
 
-    public:
-    void SetN(int N_) {N= N_;}
-    virtual double Payoff(double z) = 0;
-    int GetN(){return N;}
+   public:
+      void SetN(int N_){N=N_;}
+      int GetN(){return N;}
+      virtual double Payoff(double z)=0;
 };
 
-//Define class for  European Option
 class EurOption: public virtual Option
-{ 
-
-    public:
-     
-        double PriceCRR(BinModel Model);
-
+{
+   public:
+      //pricing European option
+      double PriceByCRR(BinModel Model);
 };
-
-//Class for American Option
 
 class AmOption: public virtual Option
 {
-
-    public:
-       double  PriceBySnell(BinModel Model);
-
-
+   public:
+      //pricing American option
+      double PriceBySnell(BinModel Model,
+         BinLattice<double>& PriceTree,
+         BinLattice<bool>& StoppingTree);
 };
 
-class Call: public EurOption , public AmOption
+class Call: public EurOption, public AmOption
 {
-    private:
-        double K; // The strike price for the option
+   private:
+      double K; //strike price
 
-    public:
-        void SetK(double K_){K=K_;}
-        int GetInput();
-        double Payoff(double z);
-
+   public:
+      void SetK(double K_){K=K_;}
+      int GetInputData();
+      double Payoff(double z);
 };
 
-class Put: public EurOption , public AmOption
+class Put: public EurOption, public AmOption
 {
-    private:
-        double K;
-    public:
-        void SetK(double K_){K=K_;}
-        int GetInput();
-        double Payoff(double z);
-};
+   private:
+      double K; //strike price
 
-
-class DigitalCall: public EurOption, public AmOption
-{
-    private:
-        double K1,K2;
-    public:
-        void SetK(double K1_, double K2_){K1=K1_; K2=K2_;}
-        int GetInput();
-        double Payoff(double S);
-
+   public:
+      void SetK(double K_){K=K_;}
+      int GetInputData();
+      double Payoff(double z);
 };
 
 #endif

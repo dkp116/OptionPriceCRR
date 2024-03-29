@@ -1,21 +1,25 @@
 #ifndef BinomialModel_h
 #define BinomialModel_h
 
-#include <iostream>
-using namespace std;
+class BinModel
+{
+   private:
+      double S0;
+      double U;
+      double D;
+      double R;
 
-class BinModel {
-private: 
-    double S0;
-    double U;
-    double D;
-    double R;
+   public:
+      //computing risk-neutral probability
+      double RiskNeutProb();
 
-public: 
-    double GetR(); // Return R value
-    double InputValues();  // Get input data for S0,U,D,R
-    double RiskNeutralP(); // Find RNP
-    double S(int n, int i); // Compute stock price 
+      //computing the stock price at node n,i
+      double S(int n, int i);
+
+      //inputting, displaying and checking model data
+      int GetInputData();
+
+      double GetR();
 };
 
 #endif

@@ -4,7 +4,7 @@ Main:  Main0001.o Option.o BinomialModel.o
 Main0001.o : Main0001.cpp
 	g++ -c Main0001.cpp
 
-Option.o : Option.cpp Option.h
+Option.o : Option.cpp Option.h Binlattice.h
 	g++ -c Option.cpp
 
 BinomialModel.o : BinomialModel.cpp BinomialModel.h
