@@ -10,10 +10,10 @@
  {
 
 //Enter Data
-    cout<< "Enter S0"; cin>> S0;
-    cout<< "Enter U"; cin>> U;
-    cout<< "Enter D"; cin>> D;
-    cout<< "Enter R"; cin>> R;
+    cout<< "Enter S0 " ; cin>> S0;
+    cout<< "Enter U " ; cin>> U;
+    cout<< "Enter D " ; cin>> D;
+    cout<< "Enter R "; cin>> R;
 
 //Validate data
     

@@ -2,6 +2,9 @@
 #include "BinomialModel.h"
 
 
+
+
+
 double EurOption::PriceCRR(BinModel Model)
 {
     double q= Model.RiskNeutralP();
@@ -54,9 +57,9 @@ double AmOption::PriceBySnell(BinModel Model)
 int Call::GetInput()
 {   
     int N;
-    cout<< "Enter how many steps N"; cin >> N;
+    cout<< "Enter how many steps N "; cin >> N;
     SetN(N);
-    cout << "Enter Strike Price"; cin >> K;
+    cout << "Enter Strike Price "; cin >> K;
     SetK(K);
 }
 
@@ -69,15 +72,15 @@ double Call::Payoff(double z)
 int Put::GetInput()
 {   
     int N;
-    cout<< "Enter how many steps N"; cin >> N;
+    cout<< "Enter how many steps N "; cin >> N;
     SetN(N);
-    cout << "Enter Strike Price"; cin >> K;
+    cout << "Enter Strike Price "; cin >> K;
     SetK(K);
 }
 
 double Put::Payoff(double z)
 {
-    if (z<K) {return z-K;}
+    if (z<K) {return K-z;}
     return 0.0;
 }
 
