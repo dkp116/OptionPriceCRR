@@ -5,25 +5,30 @@
 #include <cmath>
 using namespace std;
 
-double EurOption::PriceByCRR(BinModel Model)
+
+
+double EurOption::PriceByCRR(BinModel Model, BinLattice<double>& PriceTree)
 {
-   double q=Model.RiskNeutProb();
-   int N=GetN();
-   vector<double> Price(N+1);
-   for (int i=0; i<=N; i++)
-   {
-      Price[i]=Payoff(Model.S(N,i));
+      double q = Model.RiskNeutProb();
+   int N = GetN();
+   PriceTree.SetN(N);
+   for ( int i = 0; i<N; i++)
+   {  
+      PriceTree.SetNode(N,i,Payoff(Model.S(N,i)));
    }
-   for (int n=N-1; n>=0; n--)
+
+   for (int n = N-1; n>=0 ; n--)
    {
-      for (int i=0; i<=n; i++)
-      {
-         Price[i]=(q*Price[i+1]+(1-q)*Price[i])
+      for(int i = 0 ; i<=n; i++)
+      {  
+         int P = (q*PriceTree.GetNode(n+1,i+1)+(1-q)*PriceTree.GetNode(n+1,i))
             /(1+Model.GetR());
+         PriceTree.SetNode(n,i,P); 
       }
    }
-   return Price[0];
+   return PriceTree.GetNode(0,0);
 }
+
 
 double AmOption::PriceBySnell(BinModel Model,
    BinLattice<double>& PriceTree,
@@ -81,7 +86,7 @@ double Call::Payoff(double z)
 
 int Put::GetInputData()
 {
-   cout << "Enter put option data:" << endl;
+   cout << "Enter put option data: " << endl;
    int N;
    cout << "Enter steps to expiry N: "; cin >> N;
    SetN(N);
@@ -94,4 +99,21 @@ double Put::Payoff(double z)
 {
    if (z<K) return K-z;
    return 0.0;
+}
+
+int DoubleDigital::GetInputData()
+{
+   int K1,K2,N;
+
+   cout << "Enter Period Length " ; cin >> N;
+   SetN(N);
+   cout << "Enter Lower Stike Price " ; cin >> K1;
+   cout << "Enter Upper Stike Price " ; cin >>K2;
+   setK(K2,K1);
+}
+      
+double DoubleDigital::Payoff(double z)
+{
+   if(KL<z && KU>z){return 1.0;}
+   else {return 0.0;}
 }

@@ -1,7 +1,7 @@
 Main:  Main0001.o Option.o BinomialModel.o 
 	g++ Main0001.o Option.o BinomialModel.o -o Main
 
-Main0001.o : Main0001.cpp
+Main0001.o : Main0001.cpp HedgePosition.h
 	g++ -c Main0001.cpp
 
 Option.o : Option.cpp Option.h Binlattice.h
@@ -9,6 +9,7 @@ Option.o : Option.cpp Option.h Binlattice.h
 
 BinomialModel.o : BinomialModel.cpp BinomialModel.h
 	g++ -c BinomialModel.cpp
+
 
 clean:
 	rm *.o Main

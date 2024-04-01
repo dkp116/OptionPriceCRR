@@ -1,6 +1,6 @@
 #ifndef Option_h
 #define Option_h
-#include "BinLattice.h"
+#include "Binlattice.h"
 #include "BinomialModel.h"
 
 class Option
@@ -18,7 +18,9 @@ class EurOption: public virtual Option
 {
    public:
       //pricing European option
-      double PriceByCRR(BinModel Model);
+     
+      double PriceByCRR(BinModel Model, BinLattice<double>& PriceTree);   //Create Pricing Tree and Price of Option
+    
 };
 
 class AmOption: public virtual Option
@@ -48,6 +50,18 @@ class Put: public EurOption, public AmOption
 
    public:
       void SetK(double K_){K=K_;}
+      int GetInputData();
+      double Payoff(double z);
+};
+
+class DoubleDigital: public EurOption, public AmOption
+{
+   private:
+      double KL;
+      double KU;
+
+   public:
+      void setK(double KU_ , double KL_){KU = KU_; KL = KL_;}  //Error with this 
       int GetInputData();
       double Payoff(double z);
 };

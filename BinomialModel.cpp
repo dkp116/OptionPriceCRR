@@ -15,6 +15,11 @@ double BinModel::S(int n, int i)
    return S0*pow(1+U,i)*pow(1+D,n-i);
 }
 
+
+
+
+
+
 int BinModel::GetInputData()
 {
    //entering data
@@ -22,6 +27,7 @@ int BinModel::GetInputData()
    cout << "Enter U:  "; cin >> U;
    cout << "Enter D:  "; cin >> D;
    cout << "Enter R:  "; cin >> R;
+    cout << "Enter N:  "; cin >> N;
    cout << endl;
 
    //making sure that 0<S0, -1<D<U, -1<R
@@ -51,3 +57,28 @@ double BinModel::GetR()
 {
    return R;
 }
+
+double BinModel::GetN()
+{
+   return N;
+   
+}
+
+
+void BinModel::Tree(BinLattice<double>& Lol, BinModel Stock)
+    {
+        int N = Stock.GetN();
+        Lol.SetN(N);
+
+        for (int n = N; n>=0; n--)
+        {
+            for(int i = 0; i <= n ; i++)
+            {
+                Lol.SetNode(n,i,Stock.S(n,i));
+            }
+        }
+
+
+
+
+    }

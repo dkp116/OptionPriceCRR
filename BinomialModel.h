@@ -1,6 +1,6 @@
 #ifndef BinomialModel_h
 #define BinomialModel_h
-
+#include "Binlattice.h"
 class BinModel
 {
    private:
@@ -8,6 +8,7 @@ class BinModel
       double U;
       double D;
       double R;
+      double N;
 
    public:
       //computing risk-neutral probability
@@ -20,6 +21,12 @@ class BinModel
       int GetInputData();
 
       double GetR();
+
+      double GetN();
+
+      void Tree(BinLattice<double>& Lol, BinModel S);
+
+    
 };
 
 #endif
